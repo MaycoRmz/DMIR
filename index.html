@@ -5,27 +5,87 @@
     <title>Damaged Materials Identification and Traceability Report</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-        /* All previous CSS from the last submission remains the same */
-        
-        /* New styles for print buttons */
-        @media print {
-            .print-button, .section-print-buttons {
-                display: none !important;
-            }
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
         }
-        
-        .non-print {
-            background-color: #00008B;  /* Dark Blue */
-            color: white;
-            padding: 10px;
+
+        .report-container {
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 30px;
+        }
+
+        .report-header {
+            text-align: center;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .report-header h1 {
+            color: #2c3e50;
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .form-section {
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: #f9f9f9;
             border-radius: 5px;
-            margin-bottom: 10px;
+        }
+
+        .form-section h2 {
+            color: #2c3e50;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #34495e;
+        }
+
+        input[type="text"], 
+        input[type="date"], 
+        input[type="number"], 
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .checkbox-group {
+            margin-bottom: 15px;
+        }
+
+        .checkbox-group label {
+            display: inline-block;
+            margin-right: 15px;
+            font-weight: normal;
         }
 
         .section-print-buttons {
             display: flex;
             justify-content: space-between;
             margin-bottom: 20px;
+            background-color: #00008B;
+            padding: 10px;
+            border-radius: 5px;
         }
 
         .section-print-buttons button {
@@ -42,11 +102,28 @@
             background-color: #2980b9;
         }
 
-        /* Ensure section headers are always clear and readable */
-        .form-section h2 {
-            border-bottom: 1px solid #dee2e6;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
+        @media print {
+            body {
+                max-width: none;
+                margin: 0;
+                padding: 0;
+            }
+
+            .report-container {
+                box-shadow: none;
+            }
+
+            .section-print-buttons {
+                display: block !important;
+                background-color: transparent;
+                color: black;
+                padding: 10px 0;
+                margin-bottom: 10px;
+            }
+
+            .section-print-buttons button {
+                display: none;
+            }
         }
     </style>
 </head>
@@ -56,7 +133,7 @@
             <h1>Damaged Materials Identification and Traceability Report</h1>
         </div>
 
-        <div class="section-print-buttons non-print">
+        <div class="section-print-buttons">
             <button onclick="printSection('production-details')">
                 <i class="fas fa-print"></i> Print Production Details
             </button>
@@ -69,22 +146,21 @@
         </div>
 
         <form id="damagedMaterialsReport">
+            <!-- Rest of the form remains the same as in the previous version -->
             <div id="production-details">
                 <div class="form-section">
                     <h2>Report Details</h2>
-                    <div class="non-print">
-                        <label>Date of Report:</label>
-                        <input type="date" name="reportDate">
-                        
-                        <label>Reported By:</label>
-                        <input type="text" name="reportedBy">
-                        
-                        <label>Department:</label>
-                        <div class="checkbox-group">
-                            <label><input type="checkbox" name="department" value="Production"> Production</label>
-                            <label><input type="checkbox" name="department" value="Receiving"> Receiving</label>
-                            <label><input type="checkbox" name="department" value="QualityControl"> Quality Control</label>
-                        </div>
+                    <label>Date of Report:</label>
+                    <input type="date" name="reportDate">
+                    
+                    <label>Reported By:</label>
+                    <input type="text" name="reportedBy">
+                    
+                    <label>Department:</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="department" value="Production"> Production</label>
+                        <label><input type="checkbox" name="department" value="Receiving"> Receiving</label>
+                        <label><input type="checkbox" name="department" value="QualityControl"> Quality Control</label>
                     </div>
                 </div>
 
@@ -102,18 +178,16 @@
 
                 <div class="form-section">
                     <h2>Damage Identification</h2>
-                    <div class="non-print">
-                        <label>Type of Damage:</label>
-                        <div class="checkbox-group">
-                            <label><input type="checkbox" name="damageType" value="PhysicalDamage"> Physical Damage</label>
-                            <label><input type="checkbox" name="damageType" value="Contamination"> Contamination</label>
-                            <label><input type="checkbox" name="damageType" value="StructuralCompromise"> Structural Compromise</label>
-                            <label><input type="checkbox" name="damageType" value="Other"> Other</label>
-                        </div>
-                        
-                        <label>Specify Other Damage Type (if applicable):</label>
-                        <input type="text" name="otherDamageType">
+                    <label>Type of Damage:</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="damageType" value="PhysicalDamage"> Physical Damage</label>
+                        <label><input type="checkbox" name="damageType" value="Contamination"> Contamination</label>
+                        <label><input type="checkbox" name="damageType" value="StructuralCompromise"> Structural Compromise</label>
+                        <label><input type="checkbox" name="damageType" value="Other"> Other</label>
                     </div>
+                    
+                    <label>Specify Other Damage Type (if applicable):</label>
+                    <input type="text" name="otherDamageType">
                     
                     <label>Description of Damage:</label>
                     <input type="text" name="damageLocation">
@@ -125,21 +199,19 @@
 
             <div id="receiving-details" class="form-section">
                 <h2>Receiving Department Follow-Up</h2>
-                <div class="non-print">
-                    <label>Receiving Inspector Name:</label>
-                    <input type="text" name="receivingInspector">
-                    
-                    <label>Initial Receipt Condition:</label>
-                    <div class="checkbox-group">
-                        <label>
-                            <input type="checkbox" name="receiptCondition" value="Acceptable">
-                            <span>Acceptable</span>
-                        </label>
-                        <label>
-                            <input type="checkbox" name="receiptCondition" value="Questionable">
-                            <span>Questionable</span>
-                        </label>
-                    </div>
+                <label>Receiving Inspector Name:</label>
+                <input type="text" name="receivingInspector">
+                
+                <label>Initial Receipt Condition:</label>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" name="receiptCondition" value="Acceptable">
+                        <span>Acceptable</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" name="receiptCondition" value="Questionable">
+                        <span>Questionable</span>
+                    </label>
                 </div>
 
                 <label>Original Receive Date:</label>
@@ -149,25 +221,23 @@
             <div id="qa-actions">
                 <div class="form-section">
                     <h2><i class="fas fa-tasks"></i> QA Actions</h2>
-                    <div class="non-print">
-                        <div class="checkbox-group">
-                            <label>
-                                <input type="checkbox" name="recommendedAction" value="ReturnToSupplier">
-                                <span>Return to Supplier</span>
-                            </label>
-                            <label>
-                                <input type="checkbox" name="recommendedAction" value="Quarantine">
-                                <span>Quarantine</span>
-                            </label>
-                            <label>
-                                <input type="checkbox" name="recommendedAction" value="Dispose">
-                                <span>Dispose</span>
-                            </label>
-                            <label>
-                                <input type="checkbox" name="recommendedAction" value="PartialUse">
-                                <span>Partial Use (with restrictions)</span>
-                            </label>
-                        </div>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" name="recommendedAction" value="ReturnToSupplier">
+                            <span>Return to Supplier</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" name="recommendedAction" value="Quarantine">
+                            <span>Quarantine</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" name="recommendedAction" value="Dispose">
+                            <span>Dispose</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" name="recommendedAction" value="PartialUse">
+                            <span>Partial Use (with restrictions)</span>
+                        </label>
                     </div>
                 </div>
 
@@ -219,10 +289,9 @@
 
         // Function to print specific sections
         function printSection(sectionId) {
-            // Hide all print buttons
-            document.querySelectorAll('.section-print-buttons, .non-print').forEach(el => {
-                el.style.display = 'none';
-            });
+            // Hide all print buttons except the blue section
+            const printButtons = document.querySelector('.section-print-buttons');
+            printButtons.style.display = 'block';
 
             // Show only the specific section
             const sectionToPrint = document.getElementById(sectionId);
@@ -240,11 +309,7 @@
             window.print();
 
             // Restore original displays
-            document.querySelectorAll('.section-print-buttons, .non-print').forEach(el => {
-                el.style.display = '';
-            });
-
-            // Restore other sections
+            printButtons.style.display = 'flex';
             originalDisplays.forEach(({ el, display }) => {
                 el.style.display = display;
             });
