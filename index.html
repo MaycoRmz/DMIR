@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Damaged Materials Identification and Traceability Report</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Oswald&family=Playfair+Display:wght@700&family=Raleway:wght@700&family=Source+Serif+Pro:wght@700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -30,9 +31,11 @@
         }
 
         .report-header h1 {
-            color: #2c3e50;
+            font-family: 'Merriweather', serif;
+            color: #1a5f7a;
             margin: 0;
-            font-size: 24px;
+            font-size: 26px;
+            letter-spacing: 1px;
         }
 
         .form-section {
@@ -43,11 +46,41 @@
         }
 
         .form-section h2 {
-            color: #2c3e50;
             border-bottom: 1px solid #dee2e6;
             padding-bottom: 10px;
             margin-bottom: 15px;
-            font-size: 18px;
+            font-size: 20px;
+        }
+
+        /* Specific header styles */
+        #report-details-header {
+            font-family: 'Oswald', sans-serif;
+            color: #d35400;
+        }
+
+        #material-info-header {
+            font-family: 'Playfair+Display', serif;
+            color: #8e44ad;
+        }
+
+        #damage-identification-header {
+            font-family: 'Raleway', sans-serif;
+            color: #c0392b;
+        }
+
+        #receiving-details-header {
+            font-family: 'Source+Serif+Pro', serif;
+            color: #27ae60;
+        }
+
+        #qa-actions-header {
+            font-family: 'Oswald', sans-serif;
+            color: #2980b9;
+        }
+
+        #signatures-header {
+            font-family: 'Playfair+Display', serif;
+            color: #34495e;
         }
 
         label {
@@ -163,9 +196,58 @@
         </div>
 
         <form id="damagedMaterialsReport">
-            <!-- Rest of the form remains the same as in the previous version -->
+            <div id="production-details">
+                <div class="form-section">
+                    <h2 id="report-details-header">Report Details</h2>
+                    <label>Date of Report:</label>
+                    <input type="date" name="reportDate">
+                    
+                    <label>Reported By:</label>
+                    <input type="text" name="reportedBy">
+                    
+                    <label>Department:</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="department" value="Production"> Production</label>
+                        <label><input type="checkbox" name="department" value="Receiving"> Receiving</label>
+                        <label><input type="checkbox" name="department" value="QualityControl"> Quality Control</label>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 id="material-info-header">Material Information</h2>
+                    <label>Material Number/Name:</label>
+                    <input type="text" name="materialName">
+                    
+                    <label>Lot/Batch Number:</label>
+                    <input type="text" name="lotNumber">
+                    
+                    <label>Supplier:</label>
+                    <input type="text" name="supplier">
+                </div>
+
+                <div class="form-section">
+                    <h2 id="damage-identification-header">Damage Identification</h2>
+                    <label>Type of Damage:</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="damageType" value="PhysicalDamage"> Physical Damage</label>
+                        <label><input type="checkbox" name="damageType" value="Contamination"> Contamination</label>
+                        <label><input type="checkbox" name="damageType" value="StructuralCompromise"> Structural Compromise</label>
+                        <label><input type="checkbox" name="damageType" value="Other"> Other</label>
+                    </div>
+                    
+                    <label>Specify Other Damage Type (if applicable):</label>
+                    <input type="text" name="otherDamageType">
+                    
+                    <label>Description of Damage:</label>
+                    <input type="text" name="damageLocation">
+                    
+                    <label>Amount of Material Affected (lbs):</label>
+                    <input type="number" name="damagePercentage" min="0" max="100">
+                </div>
+            </div>
+
             <div id="receiving-details" class="form-section">
-                <h2>Receiving Department Follow-Up</h2>
+                <h2 id="receiving-details-header">Receiving Department Follow-Up</h2>
                 <label>Receiving Inspector Name:</label>
                 <input type="text" name="receivingInspector">
                 
@@ -181,7 +263,6 @@
                     </label>
                 </div>
 
-                <!-- New section for Questionable Condition Details -->
                 <div id="questionableConditionDetails">
                     <label><strong>Explain Questionable Condition:</strong></label>
                     <textarea name="questionableConditionExplanation" rows="3" placeholder="Describe the specific concerns that make this material's condition questionable"></textarea>
@@ -194,7 +275,41 @@
                 <input type="date" name="receiveDate">
             </div>
 
-            <!-- Rest of the form remains the same -->
+            <div id="qa-actions">
+                <div class="form-section">
+                    <h2 id="qa-actions-header">QA Actions</h2>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" name="recommendedAction" value="ReturnToSupplier">
+                            <span>Return to Supplier</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" name="recommendedAction" value="Quarantine">
+                            <span>Quarantine</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" name="recommendedAction" value="Dispose">
+                            <span>Dispose</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" name="recommendedAction" value="PartialUse">
+                            <span>Partial Use (with restrictions)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2 id="signatures-header">Signatures</h2>
+                    <label>Production Representative:</label>
+                    <input type="text" name="productionSignature" placeholder="Signature">
+                    
+                    <label>Receiving Department:</label>
+                    <input type="text" name="receivingSignature" placeholder="Signature">
+                    
+                    <label>Quality Control Manager:</label>
+                    <input type="text" name="qualityControlSignature" placeholder="Signature">
+                </div>
+            </div>
         </form>
     </div>
 
@@ -230,17 +345,12 @@
             });
         });
 
-        // Existing printSection function
         function printSection(sectionId) {
-            // Hide all print buttons except the blue section
             const printButtons = document.querySelector('.section-print-buttons');
             printButtons.style.display = 'block';
 
-            // Show only the specific section
-            const sectionToPrint = document.getElementById(sectionId);
             const originalDisplays = [];
 
-            // Hide other sections
             document.querySelectorAll('#production-details, #receiving-details, #qa-actions').forEach(section => {
                 if (section.id !== sectionId) {
                     originalDisplays.push({ el: section, display: section.style.display });
@@ -248,19 +358,15 @@
                 }
             });
 
-            // Print the page
             window.print();
 
-            // Restore original displays
             printButtons.style.display = 'flex';
             originalDisplays.forEach(({ el, display }) => {
                 el.style.display = display;
             });
         }
 
-        // New function to print entire report
         function printEntireReport() {
-            // Simply call browser's print function
             window.print();
         }
     </script>
