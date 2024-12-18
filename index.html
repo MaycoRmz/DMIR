@@ -3,167 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <title>Damaged Materials Identification and Traceability Report</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .form-section {
-            border: 1px solid #ddd;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-        .form-section h2 {
-            background-color: #f4f4f4;
-            padding: 10px;
-            margin: -15px -15px 15px;
-        }
-        input, select, textarea {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-        }
-        .checkbox-group {
-            display: flex;
-            flex-wrap: wrap;
-        }
-        .checkbox-group label {
-            margin-right: 15px;
-        }
+        /* All previous CSS from the last submission remains the same */
+        
+        /* New styles for print buttons */
         @media print {
-            .no-print {
-                display: none;
-            }
-            body {
-                max-width: none;
+            .print-button, .section-print-buttons {
+                display: none !important;
             }
         }
-        .print-button {
-            background-color: #4CAF50;
+        
+        .non-print {
+            background-color: #00008B;  /* Dark Blue */
             color: white;
-            padding: 10px 20px;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .section-print-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .section-print-buttons button {
+            background-color: #3498db;
+            color: white;
             border: none;
+            padding: 10px 15px;
             cursor: pointer;
-            margin-top: 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .section-print-buttons button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Ensure section headers are always clear and readable */
+        .form-section h2 {
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
         }
     </style>
 </head>
 <body>
-    <form id="damagedMaterialsReport">
-        <h1>Damaged Materials Identification and Traceability Report</h1>
-        
-        <div class="form-section">
-            <h2>Report Details</h2>
-            <label>Date of Report:</label>
-            <input type="date" name="reportDate">
-            
-            <label>Reported By:</label>
-            <input type="text" name="reportedBy">
-            
-            <label>Department:</label>
-            <div class="checkbox-group">
-                <label><input type="checkbox" name="department" value="Production"> Production</label>
-                <label><input type="checkbox" name="department" value="Receiving"> Receiving</label>
-                <label><input type="checkbox" name="department" value="QualityControl"> Quality Control</label>
+    <div class="report-container">
+        <div class="report-header">
+            <h1>Damaged Materials Identification and Traceability Report</h1>
+        </div>
+
+        <div class="section-print-buttons non-print">
+            <button onclick="printSection('production-details')">
+                <i class="fas fa-print"></i> Print Production Details
+            </button>
+            <button onclick="printSection('receiving-details')">
+                <i class="fas fa-print"></i> Print Receiving Details
+            </button>
+            <button onclick="printSection('qa-actions')">
+                <i class="fas fa-print"></i> Print QA Actions
+            </button>
+        </div>
+
+        <form id="damagedMaterialsReport">
+            <div id="production-details">
+                <div class="form-section">
+                    <h2>Report Details</h2>
+                    <div class="non-print">
+                        <label>Date of Report:</label>
+                        <input type="date" name="reportDate">
+                        
+                        <label>Reported By:</label>
+                        <input type="text" name="reportedBy">
+                        
+                        <label>Department:</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="department" value="Production"> Production</label>
+                            <label><input type="checkbox" name="department" value="Receiving"> Receiving</label>
+                            <label><input type="checkbox" name="department" value="QualityControl"> Quality Control</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Material Information</h2>
+                    <label>Material Number/Name:</label>
+                    <input type="text" name="materialName">
+                    
+                    <label>Lot/Batch Number:</label>
+                    <input type="text" name="lotNumber">
+                    
+                    <label>Supplier:</label>
+                    <input type="text" name="supplier">
+                </div>
+
+                <div class="form-section">
+                    <h2>Damage Identification</h2>
+                    <div class="non-print">
+                        <label>Type of Damage:</label>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="damageType" value="PhysicalDamage"> Physical Damage</label>
+                            <label><input type="checkbox" name="damageType" value="Contamination"> Contamination</label>
+                            <label><input type="checkbox" name="damageType" value="StructuralCompromise"> Structural Compromise</label>
+                            <label><input type="checkbox" name="damageType" value="Other"> Other</label>
+                        </div>
+                        
+                        <label>Specify Other Damage Type (if applicable):</label>
+                        <input type="text" name="otherDamageType">
+                    </div>
+                    
+                    <label>Description of Damage:</label>
+                    <input type="text" name="damageLocation">
+                    
+                    <label>Amount of Material Affected (lbs):</label>
+                    <input type="number" name="damagePercentage" min="0" max="100">
+                </div>
             </div>
-        </div>
 
-        <div class="form-section">
-            <h2>Material Information</h2>
-            <label>Material Number/Name:</label>
-            <input type="text" name="materialName">
-            
-            <label>Lot/Batch Number:</label>
-            <input type="text" name="lotNumber">
-            
-            <label>Supplier:</label>
-            <input type="text" name="supplier">
-            
-            
+            <div id="receiving-details" class="form-section">
+                <h2>Receiving Department Follow-Up</h2>
+                <div class="non-print">
+                    <label>Receiving Inspector Name:</label>
+                    <input type="text" name="receivingInspector">
+                    
+                    <label>Initial Receipt Condition:</label>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" name="receiptCondition" value="Acceptable">
+                            <span>Acceptable</span>
+                        </label>
+                        <label>
+                            <input type="checkbox" name="receiptCondition" value="Questionable">
+                            <span>Questionable</span>
+                        </label>
+                    </div>
+                </div>
 
-        <div class="form-section">
-            <h2>Damage Identification</h2>
-            <label>Type of Damage:</label>
-            <div class="checkbox-group">
-                <label><input type="checkbox" name="damageType" value="PhysicalDamage"> Physical Damage</label>
-                <label><input type="checkbox" name="damageType" value="Contamination"> Contamination</label>
-                <label><input type="checkbox" name="damageType" value="StructuralCompromise"> Structural Compromise</label>
-                <label><input type="checkbox" name="damageType" value="Other"> Other</label>
+                <label>Original Receive Date:</label>
+                <input type="date" name="receiveDate">
             </div>
-            
-            <label>Specify Other Damage Type (if applicable):</label>
-            <input type="text" name="otherDamageType">
-            
-            <label>Description of Damage:</label>
-            <input type="text" name="damageLocation">
-            
-            <label>Amount of Material Affected (lbs):</label>
-            <input type="number" name="damagePercentage" min="0" max="100">
-        </div>
 
-        <div class="form-section">
-            <h2>Receiving Department Follow-Up</h2>
-            <label>Receiving Inspector Name:</label>
-            <input type="text" name="receivingInspector">
-            
-            <label>Initial Receipt Condition:</label>
-            <label>Original Receive Date:</label>
-            <input type="date" name="receiveDate">
-        </div>
-            <div class="checkbox-group">
-                <label><input type="checkbox" name="receiptCondition" value="Acceptable"> Acceptable</label>
-                <label><input type="checkbox" name="receiptCondition" value="Questionable"> Questionable</label>
+            <div id="qa-actions">
+                <div class="form-section">
+                    <h2><i class="fas fa-tasks"></i> QA Actions</h2>
+                    <div class="non-print">
+                        <div class="checkbox-group">
+                            <label>
+                                <input type="checkbox" name="recommendedAction" value="ReturnToSupplier">
+                                <span>Return to Supplier</span>
+                            </label>
+                            <label>
+                                <input type="checkbox" name="recommendedAction" value="Quarantine">
+                                <span>Quarantine</span>
+                            </label>
+                            <label>
+                                <input type="checkbox" name="recommendedAction" value="Dispose">
+                                <span>Dispose</span>
+                            </label>
+                            <label>
+                                <input type="checkbox" name="recommendedAction" value="PartialUse">
+                                <span>Partial Use (with restrictions)</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h2><i class="fas fa-notes-medical"></i> Additional Notes</h2>
+                    <textarea name="additionalNotes" rows="4" placeholder="Enter any additional observations or details"></textarea>
+                </div>
+
+                <div class="form-section">
+                    <h2><i class="fas fa-signature"></i> Signatures</h2>
+                    <label>Production Representative:</label>
+                    <input type="text" name="productionSignature" placeholder="Signature">
+                    
+                    <label>Receiving Department:</label>
+                    <input type="text" name="receivingSignature" placeholder="Signature">
+                    
+                    <label>Quality Control Manager:</label>
+                    <input type="text" name="qualityControlSignature" placeholder="Signature">
+                </div>
             </div>
-            
-            <label>Root Cause Analysis:</label>
-            <div class="checkbox-group">
-                <label><input type="checkbox" name="rootCause" value="ManufacturingDefect"> Manufacturing Defect</label>
-                <label><input type="checkbox" name="rootCause" value="ShippingDamage"> Shipping Damage</label>
-                <label><input type="checkbox" name="rootCause" value="StorageCondition"> Storage Condition</label>
-                <label><input type="checkbox" name="rootCause" value="Other"> Other</label>
-            </div>
-        </div>
-
-        <div class="form-section">
-            <h2>Recommended Action by Quality Manager</h2>
-            <div class="checkbox-group">
-                <label><input type="checkbox" name="recommendedAction" value="ReturnToSupplier"> Return to Supplier</label>
-                <label><input type="checkbox" name="recommendedAction" value="Quarantine"> Quarantine</label>
-                <label><input type="checkbox" name="recommendedAction" value="Dispose"> Dispose</label>
-                <label><input type="checkbox" name="recommendedAction" value="PartialUse"> Partial Use (with restrictions)</label>
-            </div>
-        </div>
-
-        <div class="form-section">
-            <h2>Additional Notes</h2>
-            <textarea name="additionalNotes" rows="4" placeholder="Enter any additional observations or details"></textarea>
-        </div>
-
-        <div class="form-section">
-            <h2>Signatures</h2>
-            <label>Production Representative:</label>
-            <input type="text" name="productionSignature">
-            
-            <label>Receiving Department:</label>
-            <input type="text" name="receivingSignature">
-            
-            <label>Quality Control Manager:</label>
-            <input type="text" name="qualityControlSignature">
-        </div>
-
-        <button type="button" class="print-button no-print" onclick="window.print()">Print Report</button>
-    </form>
+        </form>
+    </div>
 
     <script>
-        // Optional: Add form validation or save functionality
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('damagedMaterialsReport');
             
-            // Ensure only one checkbox is selected in single-choice groups
+            // Single-choice checkbox groups
             const singleChoiceGroups = ['department', 'receiptCondition'];
             singleChoiceGroups.forEach(groupName => {
                 const checkboxes = document.querySelectorAll(`input[name="${groupName}"]`);
@@ -175,7 +207,48 @@
                     });
                 });
             });
+
+            // Dynamic input validation
+            const inputs = form.querySelectorAll('input, textarea');
+            inputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    this.style.borderColor = this.value ? '#3498db' : '#e9ecef';
+                });
+            });
         });
+
+        // Function to print specific sections
+        function printSection(sectionId) {
+            // Hide all print buttons
+            document.querySelectorAll('.section-print-buttons, .non-print').forEach(el => {
+                el.style.display = 'none';
+            });
+
+            // Show only the specific section
+            const sectionToPrint = document.getElementById(sectionId);
+            const originalDisplays = [];
+
+            // Hide other sections
+            document.querySelectorAll('#production-details, #receiving-details, #qa-actions').forEach(section => {
+                if (section.id !== sectionId) {
+                    originalDisplays.push({ el: section, display: section.style.display });
+                    section.style.display = 'none';
+                }
+            });
+
+            // Print the page
+            window.print();
+
+            // Restore original displays
+            document.querySelectorAll('.section-print-buttons, .non-print').forEach(el => {
+                el.style.display = '';
+            });
+
+            // Restore other sections
+            originalDisplays.forEach(({ el, display }) => {
+                el.style.display = display;
+            });
+        }
     </script>
 </body>
 </html>
