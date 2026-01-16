@@ -2,376 +2,551 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Damaged Materials Identification and Traceability Report</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Oswald&family=Playfair+Display:wght@700&family=Raleway:wght@700&family=Source+Serif+Pro:wght@700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shift Handoff Form</title>
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f4f4f4;
-        }
-
-        .report-container {
-            background-color: white;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            padding: 30px;
-        }
-
-        .report-header {
-            text-align: center;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 15px;
-            margin-bottom: 20px;
-        }
-
-        .report-header h1 {
-            font-family: 'Merriweather', serif;
-            color: #1a5f7a;
+        * {
             margin: 0;
-            font-size: 26px;
-            letter-spacing: 1px;
-        }
-
-        .form-section {
-            margin-bottom: 25px;
-            padding: 15px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
-        }
-
-        .form-section h2 {
-            border-bottom: 1px solid #dee2e6;
-            padding-bottom: 10px;
-            margin-bottom: 15px;
-            font-size: 20px;
-        }
-
-        /* Specific header styles */
-        #report-details-header {
-            font-family: 'Oswald', sans-serif;
-            color: #d35400;
-        }
-
-        #material-info-header {
-            font-family: 'Playfair+Display', serif;
-            color: #8e44ad;
-        }
-
-        #damage-identification-header {
-            font-family: 'Raleway', sans-serif;
-            color: #c0392b;
-        }
-
-        #receiving-details-header {
-            font-family: 'Source+Serif+Pro', serif;
-            color: #27ae60;
-        }
-
-        #qa-actions-header {
-            font-family: 'Oswald', sans-serif;
-            color: #2980b9;
-        }
-
-        #signatures-header {
-            font-family: 'Playfair+Display', serif;
-            color: #34495e;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: #34495e;
-        }
-
-        input[type="text"], 
-        input[type="date"], 
-        input[type="number"], 
-        textarea {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            padding: 0;
             box-sizing: border-box;
         }
-
-        .checkbox-group {
-            margin-bottom: 15px;
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f4f6;
+            padding: 20px;
         }
-
-        .checkbox-group label {
-            display: inline-block;
-            margin-right: 15px;
-            font-weight: normal;
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
-
-        .section-print-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            background-color: #00008B;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        .section-print-buttons button {
-            background-color: #3498db;
+        
+        /* Header Section */
+        .header {
+            background: #2563eb;
             color: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 12px 12px 0 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            font-size: 42px;
+            margin-bottom: 30px;
+            font-weight: bold;
+        }
+        
+        .header-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .header-info-box {
+            background: rgba(255,255,255,0.15);
+            padding: 20px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-info-box label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 8px;
+            opacity: 0.9;
+        }
+        
+        .header-info-box input {
+            width: 100%;
+            padding: 12px;
+            font-size: 20px;
+            font-weight: bold;
             border: none;
-            padding: 10px 15px;
+            border-radius: 6px;
+            background: white;
+            color: #1f2937;
+        }
+        
+        /* Action Buttons */
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
             cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
         }
-
-        .section-print-buttons button:hover {
-            background-color: #2980b9;
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
-
-        #printAllButton {
-            background-color: #28a745;
+        
+        .btn-print {
+            background: #059669;
+            color: white;
         }
-
-        #printAllButton:hover {
-            background-color: #218838;
+        
+        .btn-download {
+            background: #2563eb;
+            color: white;
         }
-
-        #questionableConditionDetails {
-            display: none;
-            background-color: #fff3cd;
-            border: 1px solid #ffeeba;
-            border-radius: 5px;
-            padding: 15px;
-            margin-top: 15px;
+        
+        .btn-display {
+            background: #7c3aed;
+            color: white;
         }
-
+        
+        .btn-save {
+            background: #dc2626;
+            color: white;
+        }
+        
+        /* Section Styles */
+        .section {
+            background: white;
+            padding: 40px;
+            margin: 20px 0;
+            border-radius: 12px;
+            border: 3px solid #e5e7eb;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .section h2 {
+            font-size: 32px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 4px solid;
+        }
+        
+        .section.previous h2 {
+            color: #2563eb;
+            border-color: #93c5fd;
+        }
+        
+        .section.incoming h2 {
+            color: #059669;
+            border-color: #6ee7b7;
+        }
+        
+        .section.safety h2 {
+            color: #dc2626;
+            border-color: #fca5a5;
+        }
+        
+        /* Grid Layout */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .full-width {
+            grid-column: span 2;
+        }
+        
+        /* Field Boxes */
+        .field {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid #e5e7eb;
+            transition: all 0.3s;
+        }
+        
+        .field:hover {
+            border-left-color: #2563eb;
+            background: #f0f9ff;
+        }
+        
+        .section.previous .field:hover {
+            border-left-color: #2563eb;
+        }
+        
+        .section.incoming .field:hover {
+            border-left-color: #059669;
+        }
+        
+        .section.safety .field:hover {
+            border-left-color: #dc2626;
+        }
+        
+        .field label {
+            display: block;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .field input,
+        .field textarea {
+            width: 100%;
+            padding: 12px;
+            font-size: 18px;
+            border: 2px solid #d1d5db;
+            border-radius: 6px;
+            font-family: Arial, sans-serif;
+            transition: all 0.3s;
+        }
+        
+        .field input:focus,
+        .field textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .field textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        /* Staffing Split */
+        .staffing-split {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .staffing-split input {
+            flex: 1;
+        }
+        
+        .staffing-split span {
+            font-size: 24px;
+            color: #6b7280;
+            font-weight: bold;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background: white;
+            border-radius: 0 0 12px 12px;
+            color: #6b7280;
+            font-size: 16px;
+            border: 3px solid #e5e7eb;
+            border-top: none;
+        }
+        
+        /* Print Styles */
         @media print {
             body {
-                max-width: none;
-                margin: 0;
+                background: white;
                 padding: 0;
             }
-
-            .report-container {
-                box-shadow: none;
+            
+            .actions {
+                display: none;
             }
-
-            .section-print-buttons {
-                display: none !important;
+            
+            .section {
+                page-break-inside: avoid;
+                border: 2px solid #000;
+            }
+            
+            .header {
+                print-color-adjust: exact;
+                -webkit-print-color-adjust: exact;
+            }
+        }
+        
+        /* Presentation Mode */
+        .presentation-mode {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #1f2937;
+            z-index: 9999;
+            overflow-y: auto;
+            padding: 40px;
+        }
+        
+        .presentation-mode .container {
+            max-width: 90%;
+        }
+        
+        .presentation-mode .section h2 {
+            font-size: 48px;
+        }
+        
+        .presentation-mode .field {
+            padding: 30px;
+        }
+        
+        .presentation-mode .field label {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        
+        .presentation-mode .field input,
+        .presentation-mode .field textarea {
+            font-size: 32px;
+            padding: 20px;
+            font-weight: bold;
+            background: #f9fafb;
+        }
+        
+        .presentation-mode .exit-notice {
+            text-align: center;
+            color: #9ca3af;
+            font-size: 20px;
+            margin-top: 40px;
+            padding: 20px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-info,
+            .grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .full-width {
+                grid-column: span 1;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
 </head>
 <body>
-    <div class="report-container">
-        <div class="report-header">
-            <h1>Damaged Materials Identification and Traceability Report</h1>
-        </div>
-
-        <div class="section-print-buttons">
-            <div>
-                <button onclick="printSection('production-details')">
-                    <i class="fas fa-print"></i> Print Production Details
-                </button>
-                <button onclick="printSection('receiving-details')">
-                    <i class="fas fa-print"></i> Print Receiving Details
-                </button>
-                <button onclick="printSection('qa-actions')">
-                    <i class="fas fa-print"></i> Print QA Actions
-                </button>
-            </div>
-            <div>
-                <button id="printAllButton" onclick="printEntireReport()">
-                    <i class="fas fa-print"></i> Print Entire Report
-                </button>
+    <div id="app" class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>SHIFT HANDOFF FORM</h1>
+            <div class="header-info">
+                <div class="header-info-box">
+                    <label>Date</label>
+                    <input type="date" id="date">
+                </div>
+                <div class="header-info-box">
+                    <label>Outgoing Shift</label>
+                    <input type="text" id="outgoingShift" placeholder="e.g., Day">
+                </div>
+                <div class="header-info-box">
+                    <label>Incoming Shift</label>
+                    <input type="text" id="incomingShift" placeholder="e.g., Night">
+                </div>
             </div>
         </div>
 
-        <form id="damagedMaterialsReport">
-            <div id="production-details">
-                <div class="form-section">
-                    <h2 id="report-details-header">Report Details</h2>
-                    <label>Date of Report:</label>
-                    <input type="date" name="reportDate">
-                    
-                    <label>Reported By:</label>
-                    <input type="text" name="reportedBy">
-                    
-                    <label>Department:</label>
-                    <div class="checkbox-group">
-                        <label><input type="checkbox" name="department" value="Production"> Production</label>
-                        <label><input type="checkbox" name="department" value="Receiving"> Receiving</label>
-                        <label><input type="checkbox" name="department" value="QualityControl"> Quality Control</label>
+        <!-- Action Buttons -->
+        <div class="actions">
+            <button class="btn btn-print" onclick="window.print()">
+                🖨️ Print
+            </button>
+            <button class="btn btn-download" onclick="downloadHTML()">
+                💾 Download HTML
+            </button>
+            <button class="btn btn-save" onclick="saveData()">
+                💾 Save Data
+            </button>
+            <button class="btn btn-display" onclick="togglePresentation()">
+                📺 Display Mode
+            </button>
+        </div>
+
+        <!-- Previous Shift Section -->
+        <div class="section previous">
+            <h2>PREVIOUS SHIFT</h2>
+            <div class="grid">
+                <div class="field">
+                    <label>Orders Picked</label>
+                    <input type="text" id="ordersPicked">
+                </div>
+                <div class="field">
+                    <label>Scheduled Pickup Time</label>
+                    <input type="time" id="schedulePickupTime">
+                </div>
+                <div class="field">
+                    <label>Orders Loaded</label>
+                    <input type="text" id="ordersLoaded">
+                </div>
+                <div class="field">
+                    <label>Scheduled Load Time</label>
+                    <input type="time" id="scheduleLoadTime">
+                </div>
+                <div class="field">
+                    <label>Inbound Orders Done</label>
+                    <input type="text" id="inboundDone">
+                </div>
+                <div class="field">
+                    <label>Staffing (Actual / Total)</label>
+                    <div class="staffing-split">
+                        <input type="text" id="actualOnShift" placeholder="Actual">
+                        <span>/</span>
+                        <input type="text" id="totalTeamMembers" placeholder="Total">
                     </div>
                 </div>
-
-                <div class="form-section">
-                    <h2 id="material-info-header">Material Information</h2>
-                    <label>Material Number/Name:</label>
-                    <input type="text" name="materialName">
-                    
-                    <label>Lot/Batch Number:</label>
-                    <input type="text" name="lotNumber">
-                    
-                    <label>Supplier:</label>
-                    <input type="text" name="supplier">
-                </div>
-
-                <div class="form-section">
-                    <h2 id="damage-identification-header">Damage Identification</h2>
-                    <label>Type of Damage:</label>
-                    <div class="checkbox-group">
-                        <label><input type="checkbox" name="damageType" value="PhysicalDamage"> Physical Damage</label>
-                        <label><input type="checkbox" name="damageType" value="Contamination"> Contamination</label>
-                        <label><input type="checkbox" name="damageType" value="StructuralCompromise"> Structural Compromise</label>
-                        <label><input type="checkbox" name="damageType" value="Other"> Other</label>
-                    </div>
-                    
-                    <label>Specify Other Damage Type (if applicable):</label>
-                    <input type="text" name="otherDamageType">
-                    
-                    <label>Description of Damage:</label>
-                    <input type="text" name="damageLocation">
-                    
-                    <label>Amount of Material Affected (lbs):</label>
-                    <input type="number" name="damagePercentage" min="0" max="100">
-                </div>
             </div>
+        </div>
 
-            <div id="receiving-details" class="form-section">
-                <h2 id="receiving-details-header">Receiving Department Follow-Up</h2>
-                <label>Receiving Inspector Name:</label>
-                <input type="text" name="receivingInspector">
-                
-                <label>Initial Receipt Condition:</label>
-                <div class="checkbox-group">
-                    <label>
-                        <input type="checkbox" name="receiptCondition" value="Acceptable">
-                        <span>Acceptable</span>
-                    </label>
-                    <label>
-                        <input type="checkbox" name="receiptCondition" value="Questionable">
-                        <span>Questionable</span>
-                    </label>
+        <!-- Incoming Shift Section -->
+        <div class="section incoming">
+            <h2>INCOMING SHIFT</h2>
+            <div class="grid">
+                <div class="field full-width">
+                    <label>XDOC Item Numbers for Shift</label>
+                    <input type="text" id="xdocItems">
                 </div>
-
-                <div id="questionableConditionDetails">
-                    <label><strong>Explain Questionable Condition:</strong></label>
-                    <textarea name="questionableConditionExplanation" rows="3" placeholder="Describe the specific concerns that make this material's condition questionable"></textarea>
-                    
-                    <label>Approved By (Name and Position):</label>
-                    <input type="text" name="questionableConditionApprover" placeholder="Name of Approving Manager/Supervisor">
+                <div class="field">
+                    <label>Orders Left to Pick</label>
+                    <input type="text" id="ordersLeftToPick">
                 </div>
-
-                <label>Original Receive Date:</label>
-                <input type="date" name="receiveDate">
-            </div>
-
-
-
-
-            
-            <div id="qa-actions">
-                <div class="form-section">
-                    <h2 id="qa-actions-header">QA Actions</h2>
-                    <div class="checkbox-group">
-                        <label>
-                            <input type="checkbox" name="recommendedAction" value="ReturnToSupplier">
-                            <span>Return to Supplier</span>
-                        </label>
-                        <label>
-                            <input type="checkbox" name="recommendedAction" value="Quarantine">
-                            <span>Quarantine</span>
-                        </label>
-                        <label>
-                            <input type="checkbox" name="recommendedAction" value="Dispose">
-                            <span>Dispose</span>
-                        </label>
-                        <label>
-                            <input type="checkbox" name="recommendedAction" value="PartialUse">
-                            <span>Partial Use (with restrictions)</span>
-                        </label>
+                <div class="field">
+                    <label>Scheduled Pickup Time</label>
+                    <input type="time" id="pickupTimeRemaining">
+                </div>
+                <div class="field">
+                    <label>Orders in Dock Ready to Load</label>
+                    <input type="text" id="ordersInDock">
+                </div>
+                <div class="field">
+                    <label>Scheduled Load Time</label>
+                    <input type="time" id="scheduleLoadTimeIncoming">
+                </div>
+                <div class="field">
+                    <label>Inbound Orders Waiting</label>
+                    <input type="text" id="inboundWaiting">
+                </div>
+                <div class="field">
+                    <label>Staffing (Actual / Total)</label>
+                    <div class="staffing-split">
+                        <input type="text" id="actualOnShiftIncoming" placeholder="Actual">
+                        <span>/</span>
+                        <input type="text" id="totalTeamMembersIncoming" placeholder="Total">
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="form-section">
-                    <h2 id="signatures-header">Signatures</h2>
-                    <label>Production Representative:</label>
-                    <input type="text" name="productionSignature" placeholder="Signature">
-                    
-                    <label>Receiving Department:</label>
-                    <input type="text" name="receivingSignature" placeholder="Signature">
-                    
-                    <label>Quality Control Manager:</label>
-                    <input type="text" name="qualityControlSignature" placeholder="Signature">
+        <!-- Safety Section -->
+        <div class="section safety">
+            <h2>SAFETY</h2>
+            <div class="grid">
+                <div class="field full-width">
+                    <label>Safety Concerns</label>
+                    <textarea id="concerns" placeholder="List any safety concerns or incidents..."></textarea>
+                </div>
+                <div class="field full-width">
+                    <label>Quick Safety Topic to Cover</label>
+                    <textarea id="quickTopic" placeholder="Brief safety reminder or topic for incoming shift..."></textarea>
                 </div>
             </div>
-        </form>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Completed by: _________________ Time: _______</p>
+        </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('damagedMaterialsReport');
-            const questionableConditionDetails = document.getElementById('questionableConditionDetails');
-            
-            // Single-choice checkbox groups
-            const singleChoiceGroups = ['department', 'receiptCondition'];
-            singleChoiceGroups.forEach(groupName => {
-                const checkboxes = document.querySelectorAll(`input[name="${groupName}"]`);
-                checkboxes.forEach(checkbox => {
-                    checkbox.addEventListener('change', function() {
-                        checkboxes.forEach(cb => {
-                            if (cb !== this) cb.checked = false;
-                        });
+        // Auto-save to localStorage
+        const fields = [
+            'date', 'outgoingShift', 'incomingShift', 'ordersPicked', 'schedulePickupTime',
+            'ordersLoaded', 'scheduleLoadTime', 'inboundDone', 'actualOnShift', 'totalTeamMembers',
+            'xdocItems', 'ordersLeftToPick', 'pickupTimeRemaining', 'ordersInDock',
+            'scheduleLoadTimeIncoming', 'inboundWaiting', 'actualOnShiftIncoming',
+            'totalTeamMembersIncoming', 'concerns', 'quickTopic'
+        ];
 
-                        // Show/hide questionable condition details
-                        if (groupName === 'receiptCondition' && this.value === 'Questionable') {
-                            questionableConditionDetails.style.display = this.checked ? 'block' : 'none';
-                        }
-                    });
-                });
-            });
-
-            // Dynamic input validation
-            const inputs = form.querySelectorAll('input, textarea');
-            inputs.forEach(input => {
-                input.addEventListener('input', function() {
-                    this.style.borderColor = this.value ? '#3498db' : '#e9ecef';
-                });
+        // Load saved data
+        window.addEventListener('load', () => {
+            fields.forEach(field => {
+                const saved = localStorage.getItem(field);
+                if (saved) {
+                    document.getElementById(field).value = saved;
+                }
             });
         });
 
-        function printSection(sectionId) {
-            const printButtons = document.querySelector('.section-print-buttons');
-            printButtons.style.display = 'block';
+        // Auto-save on change
+        fields.forEach(field => {
+            const element = document.getElementById(field);
+            if (element) {
+                element.addEventListener('input', () => {
+                    localStorage.setItem(field, element.value);
+                });
+            }
+        });
 
-            const originalDisplays = [];
-
-            document.querySelectorAll('#production-details, #receiving-details, #qa-actions').forEach(section => {
-                if (section.id !== sectionId) {
-                    originalDisplays.push({ el: section, display: section.style.display });
-                    section.style.display = 'none';
-                }
-            });
-
-            window.print();
-
-            printButtons.style.display = 'flex';
-            originalDisplays.forEach(({ el, display }) => {
-                el.style.display = display;
-            });
+        // Download as HTML
+        function downloadHTML() {
+            const htmlContent = document.documentElement.outerHTML;
+            const blob = new Blob([htmlContent], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            const date = document.getElementById('date').value || 'form';
+            a.download = `shift-handoff-${date}.html`;
+            a.click();
+            URL.revokeObjectURL(url);
+            alert('✅ File downloaded! You can now upload this to GitHub or email it.');
         }
 
-        function printEntireReport() {
-            window.print();
+        // Save data to file
+        function saveData() {
+            const data = {};
+            fields.forEach(field => {
+                data[field] = document.getElementById(field).value;
+            });
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            const date = data.date || 'data';
+            a.download = `shift-data-${date}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            alert('✅ Data saved! You can load this later.');
+        }
+
+        // Presentation Mode
+        function togglePresentation() {
+            const app = document.getElementById('app');
+            if (app.classList.contains('presentation-mode')) {
+                app.classList.remove('presentation-mode');
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            } else {
+                app.classList.add('presentation-mode');
+                const notice = document.createElement('div');
+                notice.className = 'exit-notice';
+                notice.textContent = 'Click "Display Mode" button again to exit • Press ESC to exit fullscreen';
+                app.appendChild(notice);
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen();
+                }
+            }
         }
     </script>
 </body>
