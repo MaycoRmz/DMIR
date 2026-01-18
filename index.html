@@ -6,10 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Shift Start-Up Meeting</title>
 
-  <!-- Optional: Inter; falls back gracefully if offline -->
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+  <!-- Optional font (falls back gracefully if offline) -->
+  https://fonts.googleapis.com
+  https://fonts.gstatic.com
+  https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap
 
   <style>
     /* ---------- Design Tokens ---------- */
@@ -21,12 +21,16 @@
       --ink: #0b1220;
       --ink-2: #1f2937;
       --muted: #6b7280;
-      --bg: #f5f7fb;
+      --bg: #0c1220; /* slightly darker base to pair with photos */
       --card: #ffffff;
       --border: #e8ecf2;
       --ring: rgba(37, 99, 235, 0.3);
       --glow: 0 10px 30px rgba(37, 99, 235, 0.15);
       --radius: 14px;
+
+      /* Background image token (you can change this default URL or upload via UI) */
+      --bg-image: url('https://images.unsplash.com/photo-1529070538774-1843cb3265df?q=80&w=1600&auto=format&fit=crop'); /* warehouse-like abstract */
+      --bg-overlay: rgba(10, 14, 22, 0.45); /* legibility overlay */
     }
 
     /* Dark mode */
@@ -35,7 +39,6 @@
         --ink: #e5e7eb;
         --ink-2: #cbd5e1;
         --muted: #9ca3af;
-        --bg: #0b1220;
         --card: #111827;
         --border: #1f2a3a;
         --ring: rgba(37, 99, 235, 0.45);
@@ -48,7 +51,6 @@
       --ink: #0b1220;
       --ink-2: #1f2937;
       --muted: #6b7280;
-      --bg: #f5f7fb;
       --card: #ffffff;
       --border: #e8ecf2;
       --ring: rgba(37, 99, 235, 0.3);
@@ -58,7 +60,6 @@
       --ink: #e5e7eb;
       --ink-2: #cbd5e1;
       --muted: #9ca3af;
-      --bg: #0b1220;
       --card: #111827;
       --border: #1f2a3a;
       --ring: rgba(37, 99, 235, 0.45);
@@ -68,15 +69,47 @@
     /* ---------- Global Reset ---------- */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
+
+    /* Full-screen background image + gradients + overlay */
     body {
       font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1200px 800px at -10% -10%, rgba(37, 99, 235, 0.08), transparent 50%),
-                  radial-gradient(900px 600px at 110% -10%, rgba(124, 58, 237, 0.08), transparent 50%),
-                  var(--bg);
+      /* Layer order: decorative gradients (top), photo (bottom) */
+      background-image:
+        radial-gradient(1200px 800px at -10% -10%, rgba(37, 99, 235, 0.10), transparent 50%),
+        radial-gradient(900px 600px at 110% -10%, rgba(124, 58, 237, 0.10), transparent 50%),
+        var(--bg-image);
+      background-size:
+        auto,
+        auto,
+        cover;
+      background-position:
+        left top,
+        right top,
+        center;
+      background-repeat: no-repeat, no-repeat, no-repeat;
+      background-attachment:
+        fixed,
+        fixed,
+        fixed;
       color: var(--ink);
       line-height: 1.45;
       padding: 20px;
+      position: relative;
+      min-height: 100%;
     }
+    /* Dark overlay for legibility on any image */
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: var(--bg-overlay);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Content sits above overlay */
+    .container, .actions, .toasts { position: relative; z-index: 1; }
+
     .container { max-width: 1200px; margin: 0 auto; }
 
     /* ---------- Sticky Action Bar ---------- */
@@ -220,12 +253,13 @@
 
     /* ---------- Sections ---------- */
     .section {
-      background: var(--card);
+      background: color-mix(in oklab, var(--card) 96%, transparent);
       padding: 28px;
       margin: 20px 0;
       border-radius: var(--radius);
       border: 1px solid var(--border);
       box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      backdrop-filter: blur(4px);
     }
     .section h2 {
       font-size: clamp(18px, 2.6vw, 26px);
@@ -242,7 +276,7 @@
     .full-width { grid-column: span 2; }
 
     .field {
-      background: color-mix(in oklab, var(--card) 86%, var(--bg));
+      background: color-mix(in oklab, var(--card) 86%, transparent);
       padding: 16px;
       border-radius: 10px;
       border: 1px solid var(--border);
@@ -284,12 +318,13 @@
       text-align: center;
       margin-top: 26px;
       padding: 22px;
-      background: var(--card);
+      background: color-mix(in oklab, var(--card) 96%, transparent);
       border-radius: 0 0 var(--radius) var(--radius);
       color: var(--muted);
       font-size: 14px;
       border: 1px solid var(--border);
       border-top: none;
+      backdrop-filter: blur(4px);
     }
     .footer .sig {
       display: grid;
@@ -320,6 +355,7 @@
       gap: 10px;
       min-width: 240px;
       animation: slideIn .2s ease-out;
+      backdrop-filter: blur(4px);
     }
     .toast--success { border-left-color: var(--success); }
     .toast--danger  { border-left-color: var(--danger); }
@@ -328,53 +364,20 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ---------- Presentation Mode ---------- */
-    .presentation-mode {
-      position: fixed; inset: 0;
-      width: 100vw; height: 100vh;
-      background: #0b1220;
-      z-index: 9999;
-      overflow-y: auto;
-      padding: 2vw;
-      display: flex; flex-direction: column;
-    }
-    .presentation-mode .container {
-      width: 100%; max-width: 100%; margin: 0;
-      flex: 1; display: flex; flex-direction: column;
-    }
-    .presentation-mode .header { padding: 3vh 2vw; margin-bottom: 2vh; border-radius: 18px; }
-    .presentation-mode .header h1 { font-size: clamp(32px, 6vw, 80px); margin-bottom: 1.2vh; }
-    .presentation-mode .header-info { gap: 2vw; }
-    .presentation-mode .header-info-box { padding: 2vh 1.4vw; }
-    .presentation-mode .header-info-box label { font-size: clamp(14px, 1.6vw, 24px); margin-bottom: .8vh; }
-    .presentation-mode .header-info-box input { font-size: clamp(18px, 2.5vw, 36px); padding: 1.2vh 1vw; }
-
-    .presentation-mode .kpis { gap: 1.4vw; margin: 1.2vh 0; }
-    .presentation-mode .kpi { padding: 2vh 1.6vw; }
-    .presentation-mode .kpi h3 { font-size: clamp(12px, 1.2vw, 18px); }
-    .presentation-mode .kpi .value { font-size: clamp(24px, 3.2vw, 56px); }
-
-    .presentation-mode .section { padding: 2.6vh 2vw; margin-bottom: 2vh; }
-    .presentation-mode .section h2 { font-size: clamp(24px, 4.6vw, 64px); margin-bottom: 1.6vh; padding-bottom: 1vh; }
-    .presentation-mode .grid { gap: 1.6vw; }
-    .presentation-mode .field { padding: 2vh 1.4vw; }
-    .presentation-mode .field label { font-size: clamp(16px, 2vw, 28px); }
-    .presentation-mode .field input, .presentation-mode .field textarea {
-      font-size: clamp(20px, 3vw, 48px);
-      padding: 1.2vh 1vw; font-weight: 700;
-      background: #f9fafb;
-    }
-    .presentation-mode .staffing-split span { font-size: clamp(22px, 2.4vw, 44px); }
-    .presentation-mode .footer { font-size: clamp(14px, 1.8vw, 24px); padding: 1.6vh 2vw; }
-
     /* ---------- Print ---------- */
     @media print {
-      body { background: #fff; padding: 0; }
+      body {
+        background: #fff !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        padding: 0;
+      }
+      body::after { display: none !important; }
       .actions, .toasts { display: none !important; }
-      .section { page-break-inside: avoid; border: 1.5px solid #000; box-shadow: none; }
+      .section { page-break-inside: avoid; border: 1.5px solid #000; box-shadow: none; backdrop-filter: none; background: #fff; }
       .header { color-adjust: exact; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       .kpi { border: 1px solid #000; }
-      .footer { border: 1px solid #000; border-top: none; }
+      .footer { border: 1px solid #000; border-top: none; background: #fff; }
     }
 
     /* ---------- Responsive ---------- */
@@ -454,19 +457,24 @@
         <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v12m0 0 4-4m-4 4-4-4M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
         Load Data
       </button>
-      <button class="btn" id="btn-display" title="Toggle full-screen display (Ctrl/Cmd + D)" style="--bg-btn: var(--brand-2);">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M4 8V4h4M16 4h4v4M20 16v4h-4M8 20H4v-4" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
-        Display Mode
-      </button>
       <button class="btn btn--subtle" id="btn-theme" title="Toggle light/dark (Ctrl/Cmd + T)">
         <svg id="icon-theme" viewBox="0 0 24 24" fill="none"><path d="M12 3a9 9 0 0 0 0 18 9 9 0 0 1 0-18Z" stroke="currentColor" stroke-width="2"/></svg>
         Theme
+      </button>
+      <button class="btn btn--subtle" id="btn-bg" title="Set background image">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="2"/><path d="m8 13 2.5-3 3.5 4 2-2 3 4H5l3-3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Background
+      </button>
+      <button class="btn btn--danger" id="btn-bg-clear" title="Clear background image">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M3 6h18M8 6v12m8-12v12M5 6l1-3h12l1 3" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
+        Clear BG
       </button>
       <button class="btn btn--danger" id="btn-reset" title="Clear all fields">
         <svg viewBox="0 0 24 24" fill="none"><path d="M3 6h18M8 6v12m8-12v12M5 6l1-3h12l1 3" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
         Reset
       </button>
       <input type="file" id="file-input" accept="application/json" hidden />
+      <input type="file" id="bg-input" accept="image/*" hidden />
     </div>
 
     <!-- Previous Shift -->
@@ -478,7 +486,7 @@
           <input type="number" id="ordersPicked" min="0" step="1" inputmode="numeric" />
         </div>
         <div class="field">
-          <label for="NextschedulePickupTime">Next Scheduled Pickup Time</label>
+          <label for="schedulePickupTime">Scheduled Pickup Time</label>
           <input type="time" id="schedulePickupTime" />
         </div>
         <div class="field">
@@ -486,7 +494,7 @@
           <input type="number" id="ordersLoaded" min="0" step="1" inputmode="numeric" />
         </div>
         <div class="field">
-          <label for="NextscheduleLoadTime">Next Scheduled Load Time</label>
+          <label for="scheduleLoadTime">Scheduled Load Time</label>
           <input type="time" id="scheduleLoadTime" />
         </div>
         <div class="field">
@@ -571,7 +579,7 @@
         </div>
       </div>
       <p id="shortcuts" style="margin-top:10px; color:var(--muted);">
-        Shortcuts: Ctrl/Cmd+S Save • Ctrl/Cmd+P Print • Ctrl/Cmd+D Display • Ctrl/Cmd+T Theme
+        Shortcuts: Ctrl/Cmd+S Save • Ctrl/Cmd+P Print • Ctrl/Cmd+T Theme
       </p>
     </div>
   </div>
@@ -624,7 +632,6 @@
       'completedBy','completedTime'
     ];
 
-    // Default date fill (today) if empty
     const todayISO = new Date().toISOString().slice(0,10);
 
     window.addEventListener('load', () => {
@@ -637,6 +644,12 @@
       });
       const dateEl = $('#date');
       if (dateEl && !dateEl.value) dateEl.value = todayISO;
+
+      // Restore background image if set
+      const savedBg = localStorage.getItem('bgImage');
+      if (savedBg) {
+        document.documentElement.style.setProperty('--bg-image', `url(${savedBg})`);
+      }
 
       renderKPIs();
     });
@@ -663,174 +676,3 @@
 
       $('#kpi-ready').textContent = Number.isFinite(ready) && ready >= 0 ? ready.toLocaleString() : '—';
       $('#kpi-remaining').textContent = Number.isFinite(remaining) && remaining >= 0 ? remaining.toLocaleString() : '—';
-      $('#kpi-inbound').textContent = Number.isFinite(inbound) && inbound >= 0 ? inbound.toLocaleString() : '—';
-
-      let coverage = '—';
-      if (t > 0) {
-        const pct = Math.round((a / t) * 100);
-        coverage = `${a}/${t} (${pct}%)`;
-      } else if (a > 0) {
-        coverage = `${a}/—`;
-      }
-      $('#kpi-coverage').textContent = coverage;
-    }
-
-    // ------------------ Actions ------------------
-    // Print
-    $('#btn-print').addEventListener('click', () => {
-      window.print();
-    });
-
-    // Download HTML
-    $('#btn-download').addEventListener('click', () => {
-      // ensure presentation class doesn't lock viewport in saved file
-      const app = $('#app');
-      const hadPresentation = app.classList.contains('presentation-mode');
-      if (hadPresentation) app.classList.remove('presentation-mode');
-
-      const htmlContent = document.documentElement.outerHTML;
-      const blob = new Blob([htmlContent], { type: 'text/html' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      const date = $('#date')?.value || 'form';
-      a.download = `shift-handoff-${date}.html`;
-      a.click();
-      URL.revokeObjectURL(url);
-      if (hadPresentation) app.classList.add('presentation-mode');
-      toast('HTML downloaded');
-    });
-
-    // Save Data (JSON)
-    function collectData() {
-      const data = {};
-      fields.forEach(id => {
-        const el = document.getElementById(id);
-        data[id] = el ? el.value : '';
-      });
-      return data;
-    }
-
-    function saveData() {
-      const data = collectData();
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      const date = data.date || 'data';
-      a.download = `shift-data-${date}.json`;
-      a.click();
-      URL.revokeObjectURL(url);
-      toast('Data saved');
-    }
-
-    $('#btn-save').addEventListener('click', saveData);
-
-    // Load Data (JSON)
-    $('#btn-load').addEventListener('click', () => $('#file-input').click());
-    $('#file-input').addEventListener('change', (e) => {
-      const file = e.target.files?.[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        try {
-          const data = JSON.parse(reader.result);
-          fields.forEach(id => {
-            if (Object.prototype.hasOwnProperty.call(data, id)) {
-              const el = document.getElementById(id);
-              if (el) {
-                el.value = data[id] ?? '';
-                localStorage.setItem(id, el.value);
-              }
-            }
-          });
-          renderKPIs();
-          toast('Data loaded');
-        } catch {
-          toast('Invalid JSON file', 'danger');
-        } finally {
-          e.target.value = '';
-        }
-      };
-      reader.readAsText(file);
-    });
-
-    // Display Mode
-    function togglePresentation() {
-      const app = $('#app');
-      if (app.classList.contains('presentation-mode')) {
-        app.classList.remove('presentation-mode');
-        document.exitFullscreen?.();
-        toast('Exited display mode');
-      } else {
-        app.classList.add('presentation-mode');
-        document.documentElement.requestFullscreen?.();
-        toast('Display mode enabled');
-      }
-    }
-    $('#btn-display').addEventListener('click', togglePresentation);
-
-    // Theme Toggle
-    function getTheme() {
-      return document.documentElement.getAttribute('data-theme') || 'system';
-    }
-    function setTheme(next) {
-      document.documentElement.setAttribute('data-theme', next);
-      localStorage.setItem('theme', next);
-      const icon = $('#icon-theme');
-      icon.innerHTML = next === 'dark'
-        ? '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
-        : '<circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/><path d="M12 1v3M12 20v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M1 12h3M20 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>';
-      toast(`Theme: ${next}`);
-    }
-    (function initTheme(){
-      const saved = localStorage.getItem('theme');
-      if (saved) setTheme(saved); // sets icon and attr
-    })();
-    $('#btn-theme').addEventListener('click', () => {
-      const cur = getTheme();
-      const next = cur === 'light' ? 'dark' : cur === 'dark' ? 'system' : 'light';
-      setTheme(next);
-    });
-
-    // Reset
-    $('#btn-reset').addEventListener('click', () => {
-      if (!confirm('Clear all fields and local data?')) return;
-      fields.forEach(id => {
-        localStorage.removeItem(id);
-        const el = document.getElementById(id);
-        if (el) el.value = '';
-      });
-      $('#date').value = todayISO;
-      renderKPIs();
-      toast('All fields cleared', 'danger');
-    });
-
-    // ------------------ Accessibility & UX ------------------
-    // Numeric sanitization: prevent negatives on min=0 fields
-    $$('input[type="number"][min="0"]').forEach(el => {
-      el.addEventListener('input', () => {
-        if (el.value === '') return;
-        const n = getNum(el.value);
-        if (n < 0) el.value = '0';
-      });
-    });
-
-    // Keyboard shortcuts
-    document.addEventListener('keydown', (e) => {
-      const mod = e.ctrlKey || e.metaKey;
-      if (!mod) return;
-      const k = e.key.toLowerCase();
-      if (k === 's') { e.preventDefault(); saveData(); }
-      if (k === 'p') { e.preventDefault(); window.print(); }
-      if (k === 'd') { e.preventDefault(); togglePresentation(); }
-      if (k === 't') { e.preventDefault(); $('#btn-theme').click(); }
-    });
-
-    // Update KPIs as user types immediately
-    $$('#app input, #app textarea').forEach(el => {
-      el.addEventListener('input', renderKPIs);
-    });
-  </script>
-</body>
-</html>
