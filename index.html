@@ -7,9 +7,9 @@
   <title>Shift Start-Up Meeting</title>
 
   <!-- Optional font (falls back gracefully if offline) -->
-  https://fonts.googleapis.com
-  https://fonts.gstatic.com
-  https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
 
   <style>
     /* ---------- Design Tokens ---------- */
@@ -21,16 +21,12 @@
       --ink: #0b1220;
       --ink-2: #1f2937;
       --muted: #6b7280;
-      --bg: #0c1220; /* slightly darker base to pair with photos */
+      --bg: #f5f7fb;
       --card: #ffffff;
       --border: #e8ecf2;
       --ring: rgba(37, 99, 235, 0.3);
       --glow: 0 10px 30px rgba(37, 99, 235, 0.15);
       --radius: 14px;
-
-      /* Background image token (you can change this default URL or upload via UI) */
-      --bg-image: url('https://images.unsplash.com/photo-1529070538774-1843cb3265df?q=80&w=1600&auto=format&fit=crop'); /* warehouse-like abstract */
-      --bg-overlay: rgba(10, 14, 22, 0.45); /* legibility overlay */
     }
 
     /* Dark mode */
@@ -39,6 +35,7 @@
         --ink: #e5e7eb;
         --ink-2: #cbd5e1;
         --muted: #9ca3af;
+        --bg: #0b1220;
         --card: #111827;
         --border: #1f2a3a;
         --ring: rgba(37, 99, 235, 0.45);
@@ -51,6 +48,7 @@
       --ink: #0b1220;
       --ink-2: #1f2937;
       --muted: #6b7280;
+      --bg: #f5f7fb;
       --card: #ffffff;
       --border: #e8ecf2;
       --ring: rgba(37, 99, 235, 0.3);
@@ -60,6 +58,7 @@
       --ink: #e5e7eb;
       --ink-2: #cbd5e1;
       --muted: #9ca3af;
+      --bg: #0b1220;
       --card: #111827;
       --border: #1f2a3a;
       --ring: rgba(37, 99, 235, 0.45);
@@ -69,47 +68,15 @@
     /* ---------- Global Reset ---------- */
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { height: 100%; }
-
-    /* Full-screen background image + gradients + overlay */
     body {
       font-family: "Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      /* Layer order: decorative gradients (top), photo (bottom) */
-      background-image:
-        radial-gradient(1200px 800px at -10% -10%, rgba(37, 99, 235, 0.10), transparent 50%),
-        radial-gradient(900px 600px at 110% -10%, rgba(124, 58, 237, 0.10), transparent 50%),
-        var(--bg-image);
-      background-size:
-        auto,
-        auto,
-        cover;
-      background-position:
-        left top,
-        right top,
-        center;
-      background-repeat: no-repeat, no-repeat, no-repeat;
-      background-attachment:
-        fixed,
-        fixed,
-        fixed;
+      background: radial-gradient(1200px 800px at -10% -10%, rgba(37, 99, 235, 0.08), transparent 50%),
+                  radial-gradient(900px 600px at 110% -10%, rgba(124, 58, 237, 0.08), transparent 50%),
+                  var(--bg);
       color: var(--ink);
       line-height: 1.45;
       padding: 20px;
-      position: relative;
-      min-height: 100%;
     }
-    /* Dark overlay for legibility on any image */
-    body::after {
-      content: "";
-      position: fixed;
-      inset: 0;
-      background: var(--bg-overlay);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* Content sits above overlay */
-    .container, .actions, .toasts { position: relative; z-index: 1; }
-
     .container { max-width: 1200px; margin: 0 auto; }
 
     /* ---------- Sticky Action Bar ---------- */
@@ -253,13 +220,12 @@
 
     /* ---------- Sections ---------- */
     .section {
-      background: color-mix(in oklab, var(--card) 96%, transparent);
+      background: var(--card);
       padding: 28px;
       margin: 20px 0;
       border-radius: var(--radius);
       border: 1px solid var(--border);
       box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-      backdrop-filter: blur(4px);
     }
     .section h2 {
       font-size: clamp(18px, 2.6vw, 26px);
@@ -276,7 +242,7 @@
     .full-width { grid-column: span 2; }
 
     .field {
-      background: color-mix(in oklab, var(--card) 86%, transparent);
+      background: color-mix(in oklab, var(--card) 86%, var(--bg));
       padding: 16px;
       border-radius: 10px;
       border: 1px solid var(--border);
@@ -318,13 +284,12 @@
       text-align: center;
       margin-top: 26px;
       padding: 22px;
-      background: color-mix(in oklab, var(--card) 96%, transparent);
+      background: var(--card);
       border-radius: 0 0 var(--radius) var(--radius);
       color: var(--muted);
       font-size: 14px;
       border: 1px solid var(--border);
       border-top: none;
-      backdrop-filter: blur(4px);
     }
     .footer .sig {
       display: grid;
@@ -355,7 +320,6 @@
       gap: 10px;
       min-width: 240px;
       animation: slideIn .2s ease-out;
-      backdrop-filter: blur(4px);
     }
     .toast--success { border-left-color: var(--success); }
     .toast--danger  { border-left-color: var(--danger); }
@@ -366,18 +330,12 @@
 
     /* ---------- Print ---------- */
     @media print {
-      body {
-        background: #fff !important;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-        padding: 0;
-      }
-      body::after { display: none !important; }
+      body { background: #fff; padding: 0; }
       .actions, .toasts { display: none !important; }
-      .section { page-break-inside: avoid; border: 1.5px solid #000; box-shadow: none; backdrop-filter: none; background: #fff; }
+      .section { page-break-inside: avoid; border: 1.5px solid #000; box-shadow: none; }
       .header { color-adjust: exact; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       .kpi { border: 1px solid #000; }
-      .footer { border: 1px solid #000; border-top: none; background: #fff; }
+      .footer { border: 1px solid #000; border-top: none; }
     }
 
     /* ---------- Responsive ---------- */
@@ -461,20 +419,11 @@
         <svg id="icon-theme" viewBox="0 0 24 24" fill="none"><path d="M12 3a9 9 0 0 0 0 18 9 9 0 0 1 0-18Z" stroke="currentColor" stroke-width="2"/></svg>
         Theme
       </button>
-      <button class="btn btn--subtle" id="btn-bg" title="Set background image">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z" stroke="currentColor" stroke-width="2"/><path d="m8 13 2.5-3 3.5 4 2-2 3 4H5l3-3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Background
-      </button>
-      <button class="btn btn--danger" id="btn-bg-clear" title="Clear background image">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M3 6h18M8 6v12m8-12v12M5 6l1-3h12l1 3" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
-        Clear BG
-      </button>
       <button class="btn btn--danger" id="btn-reset" title="Clear all fields">
         <svg viewBox="0 0 24 24" fill="none"><path d="M3 6h18M8 6v12m8-12v12M5 6l1-3h12l1 3" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>
         Reset
       </button>
       <input type="file" id="file-input" accept="application/json" hidden />
-      <input type="file" id="bg-input" accept="image/*" hidden />
     </div>
 
     <!-- Previous Shift -->
@@ -645,12 +594,6 @@
       const dateEl = $('#date');
       if (dateEl && !dateEl.value) dateEl.value = todayISO;
 
-      // Restore background image if set
-      const savedBg = localStorage.getItem('bgImage');
-      if (savedBg) {
-        document.documentElement.style.setProperty('--bg-image', `url(${savedBg})`);
-      }
-
       renderKPIs();
     });
 
@@ -676,3 +619,229 @@
 
       $('#kpi-ready').textContent = Number.isFinite(ready) && ready >= 0 ? ready.toLocaleString() : '—';
       $('#kpi-remaining').textContent = Number.isFinite(remaining) && remaining >= 0 ? remaining.toLocaleString() : '—';
+      $('#kpi-inbound').textContent = Number.isFinite(inbound) && inbound >= 0 ? inbound.toLocaleString() : '—';
+
+      let coverage = '—';
+      if (t > 0) {
+        const pct = Math.round((a / t) * 100);
+        coverage = `${a}/${t} (${pct}%)`;
+      } else if (a > 0) {
+        coverage = `${a}/—`;
+      }
+      $('#kpi-coverage').textContent = coverage;
+    }
+
+    // ------------------ Actions ------------------
+    // Print
+    $('#btn-print').addEventListener('click', () => {
+      window.print();
+    });
+
+    // Download HTML
+    $('#btn-download').addEventListener('click', () => {
+      const htmlContent = document.documentElement.outerHTML;
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      const date = $('#date')?.value || 'form';
+      a.download = `shift-handoff-${date}.html`;
+      a.click();
+      URL.revokeObjectURL(url);
+      toast('HTML downloaded');
+    });
+
+    // Save Data (JSON)
+    function collectData() {
+      const data = {};
+      fields.forEach(id => {
+        const el = document.getElementById(id);
+        data[id] = el ? el.value : '';
+      });
+      return data;
+    }
+    function saveData() {
+      const data = collectData();
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      const date = data.date || 'data';
+      a.download = `shift-data-${date}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      toast('Data saved');
+    }
+    $('#btn-save').addEventListener('click', saveData);
+
+    // Load Data (JSON)
+    $('#btn-load').addEventListener('click', () => $('#file-input').click());
+    $('#file-input').addEventListener('change', (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          const data = JSON.parse(reader.result);
+          fields.forEach(id => {
+            if (Object.prototype.hasOwnProperty.call(data, id)) {
+              const el = document.getElementById(id);
+              if (el) {
+                el.value = data[id] ?? '';
+                localStorage.setItem(id, el.value);
+              }
+            }
+          });
+          renderKPIs();
+          toast('Data loaded');
+        } catch {
+          toast('Invalid JSON file', 'danger');
+        } finally {
+          e.target.value = '';
+        }
+      };
+      reader.readAsText(file);
+    });
+
+    // Theme Toggle
+    function getTheme() {
+      return document.documentElement.getAttribute('data-theme') || 'system';
+    }
+    function setTheme(next) {
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      const icon = $('#icon-theme');
+      icon.innerHTML = next === 'dark'
+        ? '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
+        : '<circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/><path d="M12 1v3M12 20v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M1 12h3M20 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>';
+      toast(`Theme: ${next}`);
+    }
+    (function initTheme(){
+      const saved = localStorage.getItem('theme');
+      if (saved) setTheme(saved);
+    })();
+    $('#btn-theme').addEventListener('click', () => {
+      const cur = getTheme();
+      const next = cur === 'light' ? 'dark' : cur === 'dark' ? 'system' : 'light';
+      setTheme(next);
+    });
+
+    // Reset
+    $('#btn-reset').addEventListener('click', () => {
+      if (!confirm('Clear all fields and local data?')) return;
+      fields.forEach(id => {
+        localStorage.removeItem(id);
+        const el = document.getElementById(id);
+        if (el) el.value = '';
+      });
+      $('#date').value = todayISO;
+      renderKPIs();
+      toast('All fields cleared', 'danger');
+    });
+
+    // ------------------ Accessibility & UX ------------------
+    // Numeric sanitization: prevent negatives on min=0 fields
+    $$('input[type="number"][min="0"]').forEach(el => {
+      el.addEventListener('input', () => {
+        if (el.value === '') return;
+        const n = parseFloat(el.value);
+        if (Number.isFinite(n) && n < 0) el.value = '0';
+      });
+    });
+
+    // Keyboard shortcuts (save, print, theme)
+    document.addEventListener('keydown', (e) => {
+      const mod = e.ctrlKey || e.metaKey;
+      if (!mod) return;
+      const k = e.key.toLowerCase();
+      if (k === 's') { e.preventDefault(); saveData(); }
+      if (k === 'p') { e.preventDefault(); window.print(); }
+      if (k === 't') { e.preventDefault(); $('#btn-theme').click(); }
+    });
+
+    // Update KPIs as user types
+    $$('#app input, #app textarea').forEach(el => {
+      el.addEventListener('input', renderKPIs);
+    });
+  </script>
+
+  <!-- 24-HOUR FORMAT ENFORCEMENT SCRIPT (applies to all time inputs) -->
+  <script>
+  (() => {
+    function toHHMM(raw) {
+      if (!raw) return "";
+      let v = String(raw).trim().toLowerCase();
+      v = v.replace(/[\u2013\u2014]/g, "-").replace(/\s+/g, "");
+      let pm = /p(?!t)/.test(v);
+      let am = /a/.test(v);
+      v = v.replace(/am|pm/gi, "");
+
+      let h = 0, m = 0;
+
+      if (/^\d{1,2}:\d{1,2}$/.test(v)) {
+        const [hh, mm] = v.split(":").map(n => parseInt(n, 10));
+        h = isFinite(hh) ? hh : 0;
+        m = isFinite(mm) ? mm : 0;
+      } else if (/^\d{3,4}$/.test(v)) {
+        const padded = v.padStart(4, "0");
+        h = parseInt(padded.slice(0, -2), 10);
+        m = parseInt(padded.slice(-2), 10);
+      } else if (/^\d{1,2}$/.test(v)) {
+        h = parseInt(v, 10);
+        m = 0;
+      } else if (v === "") {
+        return "";
+      } else {
+        return "";
+      }
+
+      if (pm && h < 12) h += 12;
+      if (am && h === 12) h = 0;
+
+      h = Math.max(0, Math.min(23, h));
+      m = Math.max(0, Math.min(59, m));
+
+      const HH = String(h).padStart(2, "0");
+      const MM = String(m).padStart(2, "0");
+      return `${HH}:${MM}`;
+    }
+
+    function enforce24h(input) {
+      if (!input.hasAttribute("step")) input.setAttribute("step", "60");
+
+      const normalize = () => {
+        const strict = toHHMM(input.value);
+        if (strict !== input.value) input.value = strict;
+      };
+
+      input.addEventListener("input", normalize);
+      input.addEventListener("change", normalize);
+      input.addEventListener("blur", normalize);
+      normalize();
+    }
+
+    function initAll(root = document) {
+      root.querySelectorAll('input[type="time"]').forEach(enforce24h);
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", () => initAll());
+    } else {
+      initAll();
+    }
+
+    const mo = new MutationObserver(mutations => {
+      for (const m of mutations) {
+        m.addedNodes.forEach(node => {
+          if (node.nodeType === 1) {
+            if (node.matches?.('input[type="time"]')) enforce24h(node);
+            node.querySelectorAll?.('input[type="time"]').forEach(enforce24h);
+          }
+        });
+      }
+    });
+    mo.observe(document.documentElement, { childList: true, subtree: true });
+  })();
+  </script>
+</body>
+</html>
